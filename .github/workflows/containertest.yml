@@ -5,10 +5,22 @@ on:
   workflow_dispatch:
 
 jobs:
+  do_stuff_before_docker:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Make volume for docker
+      run: |
+        mkdir /containeroutput
+        
+
   do_docker_stuff:
     runs-on: ubuntu-latest
-    container: debian:bullseye-slim
-
+    needs: do_stuff_before_docker
+    container: 
+      image: debian:bullseye-slim
+      volumes:
+        - /containeroutput:/output
+        
     steps:
     - uses: actions/checkout@v2
 
@@ -17,7 +29,7 @@ jobs:
         ls -alh /__w/
         env
         ls -alh $GITHUB_WORKSPACE
-        cat $GITHUB_WORKSPACE/README.md | tr -d 'aeiou' > $RUNNER_WORKSPACE/out.txt
+        cat $GITHUB_WORKSPACE/README.md | tr -d 'aeiou' > /output/out.txt
 
   do_stuff_after_docker:
     runs-on: ubuntu-latest
@@ -25,7 +37,10 @@ jobs:
     steps:
     - name: Process output file
       run: |
+        pwd
         ls -alh
-        cat out.txt
+        ls -alh /
+        ls -alh /containeroutput
+        cat /containeroutput/out.txt
         
       
