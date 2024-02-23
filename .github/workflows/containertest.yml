@@ -16,3 +16,4 @@ jobs:
       run: |
         ls -alh /__w/
         env
+        ls -alh $GITHUB_WORKSPACE
