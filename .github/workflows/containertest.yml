@@ -21,7 +21,7 @@ jobs:
     container: 
       image: debian:bullseye-slim
       volumes:
-        - $RUNNER_TEMP/out:/out
+        -  ${{ env.RUNNER_TEMP }}/out:/out
         
     steps:
     - uses: actions/checkout@v2
