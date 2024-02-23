@@ -12,6 +12,7 @@ jobs:
       run: |
         pwd
         env
+        echo 'test' > $RUNNER_TEMP/marker.dat
         ls -alh
 
   do_docker_stuff:
@@ -40,6 +41,6 @@ jobs:
         ls -alh
         ls -alh /
         ls -alh $RUNNER_TEMP
-        cat $RUNNER_TEMP/out.txt
+        #cat $RUNNER_TEMP/out.txt
         
       
