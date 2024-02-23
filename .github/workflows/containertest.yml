@@ -10,6 +10,9 @@ jobs:
     steps:
     - name: Make volume for docker
       run: |
+        pwd
+        env
+        ls -alh
         mkdir /containeroutput
         
 
