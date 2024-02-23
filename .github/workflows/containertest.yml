@@ -5,19 +5,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  do_stuff_before_docker:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Make volume for docker
-      run: |
-        pwd
-        env
-        echo 'test' > $RUNNER_TEMP/marker.dat
-        ls -alh
-
   do_docker_stuff:
     runs-on: ubuntu-latest
-    needs: do_stuff_before_docker
     container: 
       image: debian:bullseye-slim
         
@@ -29,18 +18,4 @@ jobs:
         ls -alh /__w/
         env
         ls -alh $GITHUB_WORKSPACE
-        cat $GITHUB_WORKSPACE/README.md | tr -d 'aeiou' > $RUNNER_TEMP/out.txt
 
-  do_stuff_after_docker:
-    runs-on: ubuntu-latest
-    needs: do_docker_stuff
-    steps:
-    - name: Process output file
-      run: |
-        pwd
-        ls -alh
-        ls -alh /
-        ls -alh $RUNNER_TEMP
-        #cat $RUNNER_TEMP/out.txt
-        
-      
